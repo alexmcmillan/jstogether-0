@@ -1,0 +1,49 @@
+.question 
+	display: block
+	font-size: 2em
+	color: #3E78CE
+
+	&.flash 
+		color: lime
+		transition: all 1s ease-in
+
+.answer
+	width: 70%
+	margin: 2em auto
+	float: left
+	padding: 10px
+	border-radius: 4px 0 0 4px
+	font-size: 2em
+	text-align: center
+	background: linear-gradient(to left top, #222, #333)
+	border: 2px solid #c00
+	color: #ccc
+
+.submit
+	cursor: pointer
+	color: #ccc
+	width: 25%
+	float: right
+	font-size: 2em
+	padding: 10px
+	border-radius: 0 4px 4px 0
+	margin: 2em auto
+	background: linear-gradient(to left top, #a00, #600)
+	border: 2px solid #c00
+	box-shadow: 1px 1px 3px #000
+	text-shadow: 0 0 2px #300
+
+	&:active
+		background: linear-gradient(to right bottom, #a00, #600)
+
+.correctAnswer
+	color: red
+	font-size: 250%
+
+.result
+	color: red
+	font-size: 150%
+	display: block
+
+	&.correct
+		color: lime
