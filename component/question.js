@@ -74,7 +74,7 @@ export default class Question extends Component {
 		switch (question.type) {
 		default:
 			return [
-				<input key={'input'} className={'answer'} type={'text'} ref={'answer'} onKeyUp={this.onKeyUp} onBlur={this.focusAnswer} />
+				<input key={'input'} className={'answer'} type={'text'} ref={'answer'} onKeyUp={this.onKeyUp} onBlur={this.focusAnswer} />,
 				<button key={'submit'} className={'submit'} onClick={this.onSubmit}>{'Guess'}</button>
 			];
 		}
