@@ -101,7 +101,7 @@ export default class Question extends Component {
 			});
 
 			this.props.onGuess(result.correct);
-			setTimeout(this.getQuestion, 5000);
+			setTimeout(this.getQuestion, result.correct ? 1000 : 3000);
 		});
 	}
 
