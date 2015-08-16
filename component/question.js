@@ -11,7 +11,7 @@ export default class Question extends Component {
 	constructor () {
 		super();
 
-		this._bind('getQuestion', 'focusAnswer', 'onKeyUp', 'onSubmit');
+		this._bind('getQuestion', 'getAnswerOptions', 'focusAnswer', 'onKeyUp', 'onSubmit');
 		this.state = {
 			question: {},
 			answer: '',
@@ -42,11 +42,12 @@ export default class Question extends Component {
 			result = <span className={'result ' + correct}>{correct}</span>;
 		}
 
+		let answerOptions = this.getAnswerOptions(this.state.question);
+
 		return (
 			<div className={'question-container'}>
 				<span key={this.state.question.id} className={'question'}>{this.state.question.text}</span>
-				<input className={'answer'} type={'text'} ref={'answer'} onKeyUp={this.onKeyUp} onBlur={this.focusAnswer} />
-				<button className={'submit'} onClick={this.onSubmit}>{'Guess'}</button>
+				{answerOptions}
 				{result}
 				{correctAnswer}
 			</div>
@@ -64,6 +65,19 @@ export default class Question extends Component {
 			question
 		}))
 		.fail(err => console.log(err));
+	}
+
+	/**
+	 *
+	 */
+	getAnswerOptions (question) {
+		switch (question.type) {
+		default:
+			return [
+				<input key={'input'} className={'answer'} type={'text'} ref={'answer'} onKeyUp={this.onKeyUp} onBlur={this.focusAnswer} />
+				<button key={'submit'} className={'submit'} onClick={this.onSubmit}>{'Guess'}</button>
+			];
+		}
 	}
 
 	/**
