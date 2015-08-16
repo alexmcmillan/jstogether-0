@@ -16,7 +16,8 @@ export default class Question extends Component {
 			question: {},
 			answer: '',
 			result: null,
-			correctAnswer: null
+			correctAnswer: null,
+			submitting: false
 		};
 	}
 
@@ -90,6 +91,14 @@ export default class Question extends Component {
 	 *
 	 */
 	onSubmit () {
+		if (this.state.submitting) {
+			return;
+		}
+
+		this.setState({
+			submitting: true
+		});
+
 		$.post('/quiz', {
 			questionId: this.state.question.id,
 			answer: this.state.answer
@@ -114,7 +123,8 @@ export default class Question extends Component {
 		this.setState({
 			answer: '',
 			result: null,
-			correctAnswer: null
+			correctAnswer: null,
+			submitting: false
 		});
 
 		this.focusAnswer();
