@@ -14,7 +14,8 @@ router.get('/', (req, res) => {
 
 	res.send({
 		id: question.id,
-		text: question.text
+		text: question.text,
+		type: question.type
 	});
 });
 

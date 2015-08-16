@@ -11,10 +11,9 @@ export default class Question extends Component {
 	constructor () {
 		super();
 
-		this._bind('getQuestion', 'getAnswerOptions', 'focusAnswer', 'onKeyUp', 'onSubmit');
+		this._bind('getQuestion', 'getAnswerOptions', 'focusAnswer', 'onKeyUp', 'onSubmitClick', 'onClickTrue', 'onClickFalse', 'submit');
 		this.state = {
 			question: {},
-			answer: '',
 			result: null,
 			correctAnswer: null,
 			submitting: false,
@@ -60,6 +59,40 @@ export default class Question extends Component {
 	/**
 	 *
 	 */
+	onKeyUp (e) {
+		if (e.which === 13) {
+			e.preventDefault();
+			this.onSubmitClick();
+		}
+	}
+
+	/**
+	 *
+	 */
+	onSubmitClick () {
+		let answerNode = React.findDOMNode(this.refs.answer);
+		let answer = answerNode.value;
+
+		this.submit(answer);
+	}
+
+	/**
+	 *
+	 */
+	onClickTrue () {
+		this.submit('true');
+	}
+
+	/**
+	 *
+	 */
+	onClickFalse () {
+		this.submit('false');
+	}
+
+	/**
+	 *
+	 */
 	getQuestion () {
 		this.clear();
 
@@ -76,10 +109,16 @@ export default class Question extends Component {
 	 */
 	getAnswerOptions (question) {
 		switch (question.type) {
+		case 'tf':
+			return [
+				<button key={'true'} onClick={this.onClickTrue}>{'TRUE'}</button>,
+				<button key={'false'} onClick={this.onClickFalse}>{'FALSE'}</button>
+			];
+		break;
 		default:
 			return [
 				<input key={'input'} className={'answer'} type={'text'} ref={'answer'} onKeyUp={this.onKeyUp} onBlur={this.focusAnswer} />,
-				<button key={'submit'} className={'submit'} onClick={this.onSubmit}>{'Guess'}</button>
+				<button key={'submit'} className={'submit'} onClick={this.onSubmitClick}>{'Guess'}</button>
 			];
 		}
 	}
@@ -88,27 +127,17 @@ export default class Question extends Component {
 	 *
 	 */
 	focusAnswer () {
-		React.findDOMNode(this.refs.answer).focus();
-	}
+		let answerNode = React.findDOMNode(this.refs.answer);
 
-	/**
-	 *
-	 */
-	onKeyUp (e) {
-		if (e.which === 13) {
-			e.preventDefault();
-			return this.onSubmit();
+		if (answerNode) {
+			answerNode.focus();
 		}
-
-		this.setState({
-			answer: e.target.value
-		});
 	}
 
 	/**
 	 *
 	 */
-	onSubmit () {
+	submit (answer) {
 		if (this.state.submitting) {
 			return;
 		}
@@ -119,7 +148,7 @@ export default class Question extends Component {
 
 		$.post('/quiz', {
 			questionId: this.state.question.id,
-			answer: this.state.answer
+			answer
 		})
 		.done(result => {
 			this.setState({
@@ -136,14 +165,17 @@ export default class Question extends Component {
 	 *
 	 */
 	clear () {
-		React.findDOMNode(this.refs.answer).value = '';
+		let answerNode = React.findDOMNode(this.refs.answer);
+		
+		if (answerNode) {
+			answerNode.value = '';
+		}
 
 		this.setState({
 			answer: '',
 			result: null,
 			correctAnswer: null,
-			submitting: false,
-			loading: true
+			submitting: false
 		});
 
 		this.focusAnswer();

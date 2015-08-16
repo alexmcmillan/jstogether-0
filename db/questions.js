@@ -9,6 +9,7 @@ export default [{
 }, {
 	id: 2,
 	text: "0.1 + 0.2 === 0.3?",
+	type: 'tf',
 	answer: "false"
 }, {
 	id: 3,
@@ -29,6 +30,7 @@ export default [{
 }, {
 	id: 7,
 	text: "isNaN([] * [])?",
+	type: 'tf',
 	answer: "false"
 }, {
 	id: 8,
@@ -41,6 +43,7 @@ export default [{
 }, {
 	id: 10,
 	text: "String('Monkey') === 'Monkey'?",
+	type: 'tf',
 	answer: "true"
 }, {
 	id: 11,
@@ -57,10 +60,12 @@ export default [{
 }, {
 	id: 14,
 	text: "Number.MAX_VALUE + 1 === Number.MAX_VALUE?",
+	type: 'tf',
 	answer: "true"
 }, {
 	id: 15,
 	text: "Number.MIN_VALUE - 1 === Number.MIN_VALUE?",
+	type: 'tf',
 	answer: "false"
 }, {
 	id: 16,
