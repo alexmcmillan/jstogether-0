@@ -17,7 +17,8 @@ export default class Question extends Component {
 			answer: '',
 			result: null,
 			correctAnswer: null,
-			submitting: false
+			submitting: false,
+			loading: true
 		};
 	}
 
@@ -43,9 +44,11 @@ export default class Question extends Component {
 		}
 
 		let answerOptions = this.getAnswerOptions(this.state.question);
+		let loadingSpinner = this.state.loading ? <div className={'loading'} /> : null;
 
 		return (
 			<div className={'question-container'}>
+				{loadingSpinner}
 				<span key={this.state.question.id} className={'question'}>{this.state.question.text}</span>
 				{answerOptions}
 				{result}
@@ -62,7 +65,8 @@ export default class Question extends Component {
 
 		$.get('/quiz')
 		.done(question => this.setState({
-			question
+			question,
+			loading: false
 		}))
 		.fail(err => console.log(err));
 	}
@@ -138,7 +142,8 @@ export default class Question extends Component {
 			answer: '',
 			result: null,
 			correctAnswer: null,
-			submitting: false
+			submitting: false,
+			loading: true
 		});
 
 		this.focusAnswer();
